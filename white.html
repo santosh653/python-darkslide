@@ -246,10 +246,24 @@ div.slide-wrapper:last-of-type .slide {
 .slides .slide {
     opacity: 0;
 }
+.presenter_view .slide,
 .expose .slide,
 .slide.current,
 .show_next .slide.next {
     opacity: 1;
+}
+.presentation,
+.presenter_view #current_presenter_notes section,
+.slides,
+.expose .slides,
+.presenter_notes {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    display: block;
+    background: inherit;
 }
 .slide {
     display: none;
@@ -288,19 +302,6 @@ div.slide-wrapper:last-of-type .slide {
 }
 .show_next .slide.after_next {
     margin-left: 1015px;
-}
-.presentation,
-.presenter_view #current_presenter_notes section,
-.slides,
-.expose .slides,
-.presenter_notes {
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-    display: block;
-    background: inherit;
 }
 /* Content */
 
@@ -803,14 +804,12 @@ pre .il { color: #40a070 } /* Literal.Number.Integer.Long */.syntax pre .hll { b
     var updateSlideClasses = function (updateOther) {
         window.location.hash = (isPresenterView ? "presenter:" : "slide:") + currentSlideNo;
 
+        for (i = 1; i < currentSlideNo + 1; i++) changeSlideElClass(i, 'none');
         changeSlideElClass(currentSlideNo - 1, 'prev');
         changeSlideElClass(currentSlideNo, 'current');
         changeSlideElClass(currentSlideNo + 1, 'next');
         changeSlideElClass(currentSlideNo + 2, 'after_next');
-
-        for (i = currentSlideNo + 3; i < slides.length + 1; i++) {
-            changeSlideElClass(i, 'none');
-        }
+        for (i = currentSlideNo + 3; i < slides.length + 1; i++)  changeSlideElClass(i, 'none');
 
         highlightCurrentTocLink();
 
@@ -857,7 +856,7 @@ pre .il { color: #40a070 } /* Literal.Number.Integer.Long */.syntax pre .hll { b
         }
 
         var w = isPresenterView ? window.opener : presenterViewWin;
-        w.postMessage('slide#' + currentSlideNo, '*');
+        if (w) w.postMessage('slide#' + currentSlideNo, '*');
     };
 
     var nextSlide = function () {
@@ -968,6 +967,12 @@ pre .il { color: #40a070 } /* Literal.Number.Integer.Long */.syntax pre .hll { b
         if (!overviewActive) {
             addClass(document.body, 'expose');
             overviewActive = true;
+            setTimeout(function() {
+                try {
+                    document.querySelector('.slide.current').parentElement.scrollIntoView(true);
+                } catch (e) {
+                }
+            });
             setScale(1);
         } else {
             removeClass(document.body, 'expose');
