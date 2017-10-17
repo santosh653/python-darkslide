@@ -37,7 +37,7 @@ p, body, header {
 }
 
 .slide {
-    position: absolute;
+    position: relative;
     overflow: hidden;
     width: 1000px;
     height: 750px;
@@ -198,41 +198,45 @@ img {
 .presenter_notes,
 #current_presenter_notes,
 #presenter_note {
-  display: none;
+    display: none;
 }
+
 @page {
-  size: landscape;
-  margin: 0;
-  size: 1124px 852px;
+    margin: 0;
+    size: 1031px 781px;
 }
-@page:last {
-  display: none;
-}
-
-
-div.slide-wrapper {
-  padding: 15px;
-}
-div.slide,
-div.slide.current,
-div.slides,
+.slide,
+.slide.current,
+.slides,
 body,
-div.presentation {
-  position: relative !important;
-  margin: 0 !important;
+.presentation {
+    position: relative;
+    margin: 0;
+    box-shadow: none !important;
 }
-div.inner {
-  position: absolute !important;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+
+.inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
-div.slide {
-  page-break-after: avoid;
+
+.slide {
+    margin: 0 !important;
+    page-break-after: avoid;
 }
-div.slide-wrapper:last-of-type .slide {
-  page-break-after: auto;
+
+.slide-wrapper {
+    page-break-after: always;
+    position: relative;
+    margin: 0;
+    padding: 15px;
+}
+* {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
 }
 
     </style>
@@ -266,6 +270,7 @@ div.slide-wrapper:last-of-type .slide {
     background: inherit;
 }
 .slide {
+    position: absolute;
     display: none;
     left: 50%;
     top: 50%;
@@ -515,7 +520,7 @@ div.slide-wrapper:last-of-type .slide {
 }
 
     </style>
-    <style type="text/css">
+    <style type="text/css" media="all">
       /* ======================================
                  FONTS
 ====================================== */
@@ -587,17 +592,17 @@ a:hover {
 code, tt.docutils.literal {
     color: #6c71c4;
 }
-div.slide {
+.slide {
   border-radius: 20px;
   border: 2px solid #aaa;
 }
-body.expose div.slide:hover {
+.expose .slide:hover {
     box-shadow: 0 0 0 15px #268bd2;
 }
-body.expose .slide.current {
+.expose .slide.current {
     box-shadow: 0 0 0 30px #b58900;
 }
-body.expose .slide.current:hover {
+.expose .slide.current:hover {
     box-shadow: 0 0 0 15px #268bd2, 0 0 0 30px #b58900;
 }
 .presenter_notes {
@@ -935,12 +940,11 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
                 } catch (e) {
                 }
             });
-            setScale(1);
         } else {
             removeClass(document.body, 'expose');
             overviewActive = false;
-            setScale();
         }
+        setScale();
         updateOverview();
     };
 
@@ -978,9 +982,9 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
         return 1 / Math.max(sy, sx);
     };
 
-    var setScale = function (scale) {
+    var setScale = function () {
         var presentation = document.getElementsByClassName('slides')[0];
-        var transform = 'scale(' + (scale || computeScale()) + ')';
+        var transform = 'scale(' + (overviewActive ? 1 : computeScale()) + ')';
         presentation.style.MozTransform = transform;
         presentation.style.WebkitTransform = transform;
         presentation.style.OTransform = transform;
