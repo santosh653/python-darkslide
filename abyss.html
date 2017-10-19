@@ -276,15 +276,23 @@ body,
     top: 50%;
     margin-top: -375px;
     margin-left: -500px;
-    -webkit-transition: margin 0.3s ease-in, opacity 0.3s ease-in;
-    -moz-transition: margin 0.3s ease-in, opacity 0.3s ease-in;
-    -o-transition: margin 0.3s ease-in, opacity 0.3s ease-in;
+    -webkit-transition: margin 0.5s ease-in, opacity 0.5s ease-in;
+    -moz-transition: margin 0.5s ease-in, opacity 0.5s ease-in;
+    -o-transition: margin 0.5s ease-in, opacity 0.5s ease-in;
 }
 .slide.current,
 .slide.prev,
 .slide.next,
-.slide.after_next {
+.slide.next_1,
+.slide.next_2 {
     display: block;
+}
+.slide.prev_1,
+.slide.next_2 {
+    opacity: 0;
+}
+.slide.prev_1 {
+    margin-left: -1525px;
 }
 .slide.prev {
     margin-left: -1510px;
@@ -292,10 +300,12 @@ body,
 .slide.next {
     margin-left: 510px;
 }
-.slide.after_next {
+.slide.next_2 {
+    margin-left: 1035px;
+}
+.slide.next_1 {
     margin-left: 1520px;
 }
-
 .show_next .slide.prev {
     margin-left: -2015px;
 }
@@ -305,7 +315,7 @@ body,
 .show_next .slide.next {
     margin-left: 5px;
 }
-.show_next .slide.after_next {
+.show_next .slide.next_1 {
     margin-left: 1015px;
 }
 /* Content */
@@ -403,6 +413,7 @@ body,
 }
 .expose .slide {
     display: block;
+    opacity: 1;
     float: left;
     position: relative;
     left: auto !important;
@@ -434,7 +445,7 @@ body,
 .expose .slide .inner {
 }
 .expose .slide.next,
-.expose .slide.after_next {
+.expose .slide.next_1 {
     margin-left: 0;
 }
 /* Presenter Mode */
@@ -466,7 +477,7 @@ body,
     margin-left: 15px;
     z-index: 1;
 }
-.presenter_view .slide.after_next {
+.presenter_view .slide.next_1 {
     display: block;
     margin-left: 525px;
 }
@@ -780,7 +791,7 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
     var changeSlideElClass = function (slideNo, className) {
         var el = getSlideEl(slideNo);
         if (el) {
-            removeClass(el, 'prev current next after_next none');
+            removeClass(el, 'prev prev_1 current next next_1 next_2 none');
             addClass(el, className);
         }
     };
@@ -788,12 +799,14 @@ pre .vi{color:#68838b!important;font-weight:700!important;}
     var updateSlideClasses = function (updateOther) {
         window.location.hash = (isPresenterView ? "presenter:" : "slide:") + currentSlideNo;
 
-        for (i = 1; i < currentSlideNo + 1; i++) changeSlideElClass(i, 'none');
+        for (i = 1; i < currentSlideNo - 1; i++) changeSlideElClass(i, 'none');
+        changeSlideElClass(currentSlideNo - 2, 'prev_1');
         changeSlideElClass(currentSlideNo - 1, 'prev');
         changeSlideElClass(currentSlideNo, 'current');
         changeSlideElClass(currentSlideNo + 1, 'next');
-        changeSlideElClass(currentSlideNo + 2, 'after_next');
-        for (i = currentSlideNo + 3; i < slides.length + 1; i++) changeSlideElClass(i, 'none');
+        changeSlideElClass(currentSlideNo + 2, 'next_1');
+        changeSlideElClass(currentSlideNo + 3, 'next_2');
+        for (i = currentSlideNo + 4; i < slides.length + 1; i++) changeSlideElClass(i, 'none');
 
         highlightCurrentTocLink();
 
