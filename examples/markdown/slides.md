@@ -1,6 +1,6 @@
 # Title Slide
 
-.footer: [default theme](index.html) | [wide16x9 theme](wide16x9.html) | [abyss theme](abyss.html) | [void theme](void.html) | [white theme](white.html) | [github](https://github.com/ionelmc/python-darkslide)
+.footer: Themes: [default](index.html) | [abyss](abyss.html) | [void](void.html) | [white](white.html) Themes 16x9: [default](default_wide16x9.html) | [abyss](abyss_wide16x9.html) | [void](void_wide16x9.html) | [white](white_wide16x9.html)    Project: [github](https://github.com/ionelmc/python-darkslide)
 
 ---
 

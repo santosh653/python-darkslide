@@ -53,6 +53,7 @@ class Generator(object):
             - ``presenter_notes``: enable presenter notes
             - ``relative``: enable relative asset urls
             - ``theme``: path to the theme to use for this presentation
+            - ``theme_base``: Default theme base. Either 'default' or 'wide_6x9'.
             - ``verbose``: enables verbose output
         """
         self.user_css = []
@@ -70,6 +71,7 @@ class Generator(object):
         self.presenter_notes = kwargs.get('presenter_notes', True)
         self.relative = kwargs.get('relative', False)
         self.theme = kwargs.get('theme', 'default')
+        self.theme_base = kwargs.get('theme_base', 'default')
         self.verbose = kwargs.get('verbose', False)
         self.linenos = self.linenos_check(kwargs.get('linenos'))
         self.watch = kwargs.get('watch', False)
@@ -267,6 +269,30 @@ class Generator(object):
 
         return theme_dir
 
+    def load_css(self, css_name):
+        """ Load a CSS file from the theme with fallback to theme_base, then to default.
+        """
+        css_filename = css_name + '.css'
+
+        # Look in theme directory
+        css_path = os.path.join(self.theme_dir, 'css', css_filename)
+        if self.theme == 'default' or not os.path.exists(css_path):
+            # Fall back to theme_base directory (if specified)
+            if self.theme_base != 'default':
+                css_path = os.path.join(THEMES_DIR, self.theme_base, 'css', css_filename)
+            # Fall back to default directory 
+            if self.theme_base == 'default' or not os.path.exists(css_path):
+                css_path = os.path.join(THEMES_DIR, 'default', 'css', css_filename)
+            if not os.path.exists(css_path):
+                raise IOError(u"Cannot find {} in default theme".format(css_filename))
+
+        with codecs.open(css_path, encoding=self.encoding) as css_file:
+            return {
+                'path_url': utils.get_path_url(css_path, self.relative and self.destination_dir),
+                'contents': css_file.read(),
+                'embeddable': True
+            }
+
     def get_css(self):
         """ Fetches and returns stylesheet file path or contents, for both
             print and screen contexts, depending if we want a standalone
@@ -274,53 +300,8 @@ class Generator(object):
         """
         css = {}
 
-        base_css = os.path.join(self.theme_dir, 'css', 'base.css')
-        if not os.path.exists(base_css):
-            base_css = os.path.join(THEMES_DIR, 'default', 'css', 'base.css')
-            if not os.path.exists(base_css):
-                raise IOError(u"Cannot find base.css in default theme")
-        with codecs.open(base_css, encoding=self.encoding) as css_file:
-            css['base'] = {
-                'path_url': utils.get_path_url(base_css, self.relative and self.destination_dir),
-                'contents': css_file.read(),
-                'embeddable': True
-            }
-
-        print_css = os.path.join(self.theme_dir, 'css', 'print.css')
-        if not os.path.exists(print_css):
-            print_css = os.path.join(THEMES_DIR, 'default', 'css', 'print.css')
-            if not os.path.exists(print_css):
-                raise IOError(u"Cannot find print.css in default theme")
-        with codecs.open(print_css, encoding=self.encoding) as css_file:
-            css['print'] = {
-                'path_url': utils.get_path_url(print_css, self.relative and self.destination_dir),
-                'contents': css_file.read(),
-                'embeddable': True
-            }
-
-        screen_css = os.path.join(self.theme_dir, 'css', 'screen.css')
-        if not os.path.exists(screen_css):
-            screen_css = os.path.join(THEMES_DIR, 'default', 'css', 'screen.css')
-            if not os.path.exists(screen_css):
-                raise IOError(u"Cannot find screen.css in default theme")
-        with codecs.open(screen_css, encoding=self.encoding) as css_file:
-            css['screen'] = {
-                'path_url': utils.get_path_url(screen_css, self.relative and self.destination_dir),
-                'contents': css_file.read(),
-                'embeddable': True
-            }
-
-        theme_css = os.path.join(self.theme_dir, 'css', 'theme.css')
-        if not os.path.exists(theme_css):
-            theme_css = os.path.join(THEMES_DIR, 'default', 'css', 'theme.css')
-            if not os.path.exists(theme_css):
-                raise IOError(u"Cannot find theme.css in default theme")
-        with codecs.open(theme_css, encoding=self.encoding) as css_file:
-            css['theme'] = {
-                'path_url': utils.get_path_url(theme_css, self.relative and self.destination_dir),
-                'contents': css_file.read(),
-                'embeddable': True
-            }
+        for css_name in ['base', 'print', 'screen', 'theme']:
+            css[css_name] = self.load_css(css_name)
 
         return css
 
