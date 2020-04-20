@@ -108,6 +108,12 @@ def _parse_options():
         default='default')
 
     parser.add_option(
+        "-B", "--base",
+        dest="theme_base",
+        help="Theme base. 'default' or 'wide_6x9'.",
+        default='default')
+
+    parser.add_option(
         "-v", "--verbose",
         action="store_true",
         dest="verbose",
