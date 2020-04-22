@@ -71,6 +71,12 @@ def _parse_options():
         default=2)
 
     parser.add_option(
+        "-M", "--mod",
+        dest="theme_mod",
+        help="Specify a theme modifier by name. Available: wide_16x9.",
+        default='')
+
+    parser.add_option(
         "-o", "--direct-output",
         action="store_true",
         dest="direct",
@@ -105,12 +111,6 @@ def _parse_options():
         "-t", "--theme",
         dest="theme",
         help="A theme name, or path to a landlside theme directory",
-        default='default')
-
-    parser.add_option(
-        "-B", "--base",
-        dest="theme_base",
-        help="Theme base. 'default' or 'wide_6x9'.",
         default='default')
 
     parser.add_option(

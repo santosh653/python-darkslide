@@ -53,7 +53,7 @@ class Generator(object):
             - ``presenter_notes``: enable presenter notes
             - ``relative``: enable relative asset urls
             - ``theme``: path to the theme to use for this presentation
-            - ``theme_base``: Default theme base. Either 'default' or 'wide_6x9'.
+            - ``theme_mod``: modifications to the default theme
             - ``verbose``: enables verbose output
         """
         self.user_css = []
@@ -71,7 +71,7 @@ class Generator(object):
         self.presenter_notes = kwargs.get('presenter_notes', True)
         self.relative = kwargs.get('relative', False)
         self.theme = kwargs.get('theme', 'default')
-        self.theme_base = kwargs.get('theme_base', 'default')
+        self.theme_mod = kwargs.get('theme_mod', '')
         self.verbose = kwargs.get('verbose', False)
         self.linenos = self.linenos_check(kwargs.get('linenos'))
         self.watch = kwargs.get('watch', False)
@@ -270,18 +270,18 @@ class Generator(object):
         return theme_dir
 
     def load_css(self, css_name):
-        """ Load a CSS file from the theme with fallback to theme_base, then to default.
+        """ Load a CSS file from the theme with fallback to theme_mod, then to default.
         """
         css_filename = css_name + '.css'
 
         # Look in theme directory
         css_path = os.path.join(self.theme_dir, 'css', css_filename)
         if self.theme == 'default' or not os.path.exists(css_path):
-            # Fall back to theme_base directory (if specified)
-            if self.theme_base != 'default':
-                css_path = os.path.join(THEMES_DIR, self.theme_base, 'css', css_filename)
-            # Fall back to default directory 
-            if self.theme_base == 'default' or not os.path.exists(css_path):
+            # Fall back to theme_mod directory (if specified)
+            if self.theme_mod:
+                css_path = os.path.join(THEMES_DIR, self.theme_mod, 'css', css_filename)
+            # Fall back to default directory
+            if not self.theme_mod or not os.path.exists(css_path):
                 css_path = os.path.join(THEMES_DIR, 'default', 'css', css_filename)
             if not os.path.exists(css_path):
                 raise IOError(u"Cannot find {} in default theme".format(css_filename))

@@ -233,6 +233,10 @@ Options:
                         available: no (no line numbers); inline (inside <pre>
                         tag); table (lines numbers in another cell, copy-paste
                         friendly).
+  -m LEVEL, --max-toc-level=LEVEL
+                        Limits the TOC level generation to a specific level.
+  -M, --mod=MOD
+                        Specify a theme modifier by name. Available: wide16x9.
   -o, --direct-output   Prints the generated HTML code to stdout.
   -P, --no-presenter-notes
                         Don't include presenter notes in the output.
@@ -241,7 +245,7 @@ Options:
                         working dir; This may be useful if you intend to
                         publish your html presentation online.
   -t THEME, --theme=THEME
-                        A theme name, or path to a landlside theme directory
+                        A theme name, or path to a daskslide theme directory
   -v, --verbose         Write informational messages to stdout (enabled by
                         default).
   -x EXTENSIONS, --extensions=EXTENSIONS
