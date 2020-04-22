@@ -451,6 +451,15 @@ one by passing the ``--copy-theme`` option to the ``darkslide`` command:
 
     $ darkslide slides.md -t /path/to/some/theme --copy-theme
 
+Widescreen 16x9
+---------------
+
+You can create widescreen 16x9 slides using the ``--mod=wide16x9`` option.
+
+**NOTE:** The ``--mod=wide16x9`` option causes the files in Darkslide's ``themes/wide16x9/``
+directory to supersede the corresponding files in Darkslide's ``themes/default/``
+directory before the selected theme (if any) is applied.
+
 User stylesheets and Javascripts
 ================================
 
