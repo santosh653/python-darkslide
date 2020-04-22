@@ -245,7 +245,7 @@ Options:
                         working dir; This may be useful if you intend to
                         publish your html presentation online.
   -t THEME, --theme=THEME
-                        A theme name, or path to a daskslide theme directory
+                        A theme name, or path to a darkslide theme directory
   -v, --verbose         Write informational messages to stdout (enabled by
                         default).
   -x EXTENSIONS, --extensions=EXTENSIONS
