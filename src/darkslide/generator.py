@@ -3,7 +3,6 @@ import codecs
 import inspect
 import os
 import re
-import shutil
 import sys
 
 import jinja2
@@ -15,16 +14,19 @@ from . import __version__
 from . import macro as macro_module
 from . import utils
 from .parser import Parser
+from .utils import cached_property
 
 BASE_DIR = os.path.dirname(__file__)
 THEMES_DIR = os.path.join(BASE_DIR, 'themes')
+MODS_DIR = os.path.join(BASE_DIR, 'mods')
 VALID_LINENOS = ('no', 'inline', 'table')
 
 
 class Generator(object):
-    """The Generator class takes and processes presentation source as a file, a
-       folder or a configuration file and provides methods to render them as a
-       presentation.
+    """
+    The Generator class takes and processes presentation source as a file, a
+    folder or a configuration file and provides methods to render them as a
+    presentation.
     """
     default_macros = (
         macro_module.CodeHighlightingMacro,
@@ -37,11 +39,10 @@ class Generator(object):
     )
 
     def __init__(self, source, **kwargs):
-        """ Configures this generator. Available ``args`` are:
+        """
+        Configures this generator. Available ``args`` are:
             - ``source``: source file or directory path
             Available ``kwargs`` are:
-            - ``copy_theme``: copy theme directory and files into presentation
-                              one
             - ``destination_file``: path to html destination file
             - ``direct``: enables direct rendering presentation to stdout
             - ``debug``: enables debug mode
@@ -56,12 +57,8 @@ class Generator(object):
             - ``theme_mod``: modifications to the default theme
             - ``verbose``: enables verbose output
         """
-        self.user_css = []
-        self.user_js = []
-        self.copy_theme = kwargs.get('copy_theme', False)
         self.debug = kwargs.get('debug', False)
-        self.destination_file = kwargs.get('destination_file',
-                                           'presentation.html')
+        self.destination_file = kwargs.get('destination_file', 'presentation.html')
         self.direct = kwargs.get('direct', False)
         self.embed = kwargs.get('embed', False)
         self.encoding = kwargs.get('encoding', 'utf8')
@@ -95,13 +92,12 @@ class Generator(object):
             self.destination_file = config.get('destination', self.destination_file)
             self.embed = config.get('embed', self.embed)
             self.relative = config.get('relative', self.relative)
-            self.copy_theme = config.get('copy_theme', self.copy_theme)
             self.extensions = config.get('extensions', self.extensions)
             self.maxtoclevel = config.get('max-toc-level', self.maxtoclevel)
             self.theme = config.get('theme', self.theme)
             self.destination_dir = os.path.dirname(self.destination_file)
-            self.user_css.extend(self.process_user_files(config.get('css', [])))
-            self.user_js.extend(self.process_user_files(config.get('js', [])))
+            self.user_css = config.get('css', [])
+            self.user_js = config.get('js', [])
             self.linenos = self.linenos_check(config.get('linenos', self.linenos))
         else:
             self.source = source
@@ -118,12 +114,26 @@ class Generator(object):
         if os.path.exists(self.destination_file) and not os.path.isfile(self.destination_file):
             raise IOError("Destination %s exists and is not a file" % self.destination_file)
 
-        self.theme_dir = self.find_theme_dir(self.theme, self.copy_theme)
-        self.template_file = self.get_template_file()
+        self.theme_paths = [
+            os.path.join(THEMES_DIR, self.theme),
+            os.path.join(THEMES_DIR, 'default'),
+        ]
+        if self.theme_mod:
+            self.theme_paths.append(os.path.join(MODS_DIR, self.theme_mod))
+
+        self.template_file = self.lookup_file('template.html')
 
         # macros registering
         self.macros = []
         self.register_macro(*self.default_macros)
+
+    def lookup_file(self, name):
+        for path in self.theme_paths:
+            absname = os.path.join(path, name)
+            if os.path.exists(absname):
+                return absname
+        else:
+            raise RuntimeError("Could not find %s in %s" % (name, self.theme_paths))
 
     def process_user_files(self, files):
         if isinstance(files, string_types):
@@ -151,14 +161,16 @@ class Generator(object):
                     self.log("Loaded:  %s\n" % path)
 
     def add_toc_entry(self, title, level, slide_number):
-        """ Adds a new entry to current presentation Table of Contents.
+        """
+        Adds a new entry to current presentation Table of Contents.
         """
         self.__toc.append({'title': title, 'number': slide_number,
                            'level': level})
 
     @property
     def toc(self):
-        """ Smart getter for Table of Content list.
+        """
+        Smart getter for Table of Content list.
         """
         toc = []
         stack = [toc]
@@ -172,7 +184,8 @@ class Generator(object):
         return toc
 
     def execute(self):
-        """ Execute this generator regarding its current configuration.
+        """
+        Execute this generator regarding its current configuration.
         """
         if self.direct:
             out = getattr(sys.stdout, 'buffer', sys.stdout)
@@ -188,25 +201,15 @@ class Generator(object):
                 watch(self.watch_dir, self.write_and_log)
 
     def write_and_log(self):
-        self.watch_files = []
         self.num_slides = 0
         self.__toc = []
         self.write()
         self.log(u"Generated file: %s" % self.destination_file)
 
-    def get_template_file(self):
-        """ Retrieves Jinja2 template file path.
-        """
-        if os.path.exists(os.path.join(self.theme_dir, 'base.html')):
-            return os.path.join(self.theme_dir, 'base.html')
-        default_dir = os.path.join(THEMES_DIR, 'default')
-        if not os.path.exists(os.path.join(default_dir, 'base.html')):
-            raise IOError("Cannot find base.html in default theme")
-        return os.path.join(default_dir, 'base.html')
-
     def fetch_contents(self, source, work_dir):
-        """ Recursively fetches Markdown contents from a single file or
-            directory containing itself Markdown/RST files.
+        """
+        Recursively fetches contents from a single file or
+        directory containing itself Markdown/RST files.
         """
         slides = []
 
@@ -246,89 +249,53 @@ class Generator(object):
 
         return slides
 
-    def find_theme_dir(self, theme, copy_theme=False):
-        """ Finds them dir path from its name.
+    def read_asset(self, path):
         """
-        if os.path.exists(theme):
-            theme_dir = theme
-        elif os.path.exists(os.path.join(THEMES_DIR, theme)):
-            theme_dir = os.path.join(THEMES_DIR, theme)
-        else:
-            raise IOError("Theme %s not found or invalid" % theme)
-
-        target_theme_dir = os.path.join(os.getcwd(), 'theme')
-        if copy_theme or os.path.exists(target_theme_dir):
-            self.log(u'Copying %s theme directory to %s'
-                     % (theme, target_theme_dir))
-            if not os.path.exists(target_theme_dir):
-                try:
-                    shutil.copytree(theme_dir, target_theme_dir)
-                except Exception as e:
-                    self.log(u"Skipped copy of theme folder: %s" % e)
-            theme_dir = target_theme_dir
-
-        return theme_dir
-
-    def load_css(self, css_name):
-        """ Load a CSS file from the theme with fallback to theme_mod, then to default.
+        Load a CSS file from the given path.
         """
-        css_filename = css_name + '.css'
-
-        # Look in theme directory
-        css_path = os.path.join(self.theme_dir, 'css', css_filename)
-        if self.theme == 'default' or not os.path.exists(css_path):
-            # Fall back to theme_mod directory (if specified)
-            if self.theme_mod:
-                css_path = os.path.join(THEMES_DIR, self.theme_mod, 'css', css_filename)
-            # Fall back to default directory
-            if not self.theme_mod or not os.path.exists(css_path):
-                css_path = os.path.join(THEMES_DIR, 'default', 'css', css_filename)
-            if not os.path.exists(css_path):
-                raise IOError(u"Cannot find {} in default theme".format(css_filename))
-
-        with codecs.open(css_path, encoding=self.encoding) as css_file:
+        with codecs.open(path, encoding=self.encoding) as asset:
             return {
-                'path_url': utils.get_path_url(css_path, self.relative and self.destination_dir),
-                'contents': css_file.read(),
+                'path_url': utils.get_path_url(path, self.relative and self.destination_dir),
+                'contents': asset.read(),
+                'dirname': os.path.dirname(path),
                 'embeddable': True
             }
 
-    def get_css(self):
+    @cached_property
+    def css_assets(self):
         """ Fetches and returns stylesheet file path or contents, for both
             print and screen contexts, depending if we want a standalone
             presentation or not.
         """
-        css = {}
-
-        for css_name in ['base', 'print', 'screen', 'theme']:
-            css[css_name] = self.load_css(css_name)
-
+        css = [
+            self.read_asset(self.lookup_file(os.path.join('css', 'base.css'))),
+            self.read_asset(self.lookup_file(os.path.join('css', 'print.css'))),
+            self.read_asset(self.lookup_file(os.path.join('css', 'screen.css'))),
+            self.read_asset(self.lookup_file(os.path.join('css', 'theme.css'))),
+        ]
+        if self.theme_mod:
+            css.append(self.read_asset(self.lookup_file(os.path.join('css', 'mod.css'))))
+            css.append(self.read_asset(self.lookup_file(os.path.join('css', 'mod.css'))))
+        css.extend(self.process_user_files(self.user_css))
         return css
 
-    def get_js(self):
-        """ Fetches and returns javascript file path or contents, depending if
-            we want a standalone presentation or not.
+    @cached_property
+    def js_assets(self):
         """
-        js_file = os.path.join(self.theme_dir, 'js', 'slides.js')
-
-        if not os.path.exists(js_file):
-            js_file = os.path.join(THEMES_DIR, 'default', 'js', 'slides.js')
-
-            if not os.path.exists(js_file):
-                raise IOError(u"Cannot find slides.js in default theme")
-        with codecs.open(js_file, encoding=self.encoding) as js_file_obj:
-            return {
-                'path_url': utils.get_path_url(js_file, self.relative and self.destination_dir),
-                'contents': js_file_obj.read(),
-                'embeddable': True
-            }
+        Fetches and returns javascript file path or contents, depending if
+        we want a standalone presentation or not.
+        """
+        js = [self.read_asset(self.lookup_file(os.path.join('js', 'slides.js')))]
+        js.extend(self.process_user_files(self.user_js))
+        return js
 
     def get_slide_vars(self, slide_src, source,
                        _presenter_notes_re=re.compile(r'<h\d[^>]*>presenter notes</h\d>',
                                                       re.DOTALL | re.UNICODE | re.IGNORECASE),
                        _slide_title_re=re.compile(r'(<h(\d+?).*?>(.+?)</h\d>)\s?(.+)?', re.DOTALL | re.UNICODE)):
-        """ Computes a single slide template vars from its html source code.
-            Also extracts slide information for the table of contents.
+        """
+        Computes a single slide template vars from its html source code.
+        Also extracts slide information for the table of contents.
         """
         presenter_notes = ''
 
@@ -385,7 +352,8 @@ class Generator(object):
             return context
 
     def get_template_vars(self, slides):
-        """ Computes template vars from slides html source code.
+        """
+        Computes template vars from slides html source code.
         """
         try:
             head_title = slides[0]['title']
@@ -401,19 +369,26 @@ class Generator(object):
                 # only show slides that have a title and lever is not too deep
                 self.add_toc_entry(slide_vars['title'], slide_vars['level'], slide_number)
 
-        return {'head_title': head_title, 'num_slides': str(self.num_slides),
-                'slides': slides, 'toc': self.toc, 'embed': self.embed,
-                'css': self.get_css(), 'js': self.get_js(),
-                'user_css': self.user_css, 'user_js': self.user_js,
-                'version': __version__}
+        return {
+            'head_title': head_title,
+            'num_slides': str(self.num_slides),
+            'slides': slides,
+            'toc': self.toc,
+            'embed': self.embed,
+            'css_assets': self.css_assets,
+            'js_assets': self.js_assets,
+            'version': __version__
+        }
 
     def linenos_check(self, value):
-        """ Checks and returns a valid value for the ``linenos`` option.
+        """
+        Checks and returns a valid value for the ``linenos`` option.
         """
         return value if value in VALID_LINENOS else 'inline'
 
     def log(self, message, type='notice'):
-        """ Logs a message (eventually, override to do something more clever).
+        """
+        Logs a message (eventually, override to do something more clever).
         """
         if self.logger and not callable(self.logger):
             raise ValueError(u"Invalid logger set, must be a callable")
@@ -421,10 +396,11 @@ class Generator(object):
             self.logger(message, type)
 
     def parse_config(self, config_source):
-        """ Parses a landslide configuration file and returns a normalized
-            python dict.
         """
-        self.log(u"Config   %s" % config_source)
+        Parses a landslide configuration file and returns a normalized
+        python dict.
+        """
+        self.log(u"Reading config: %s" % config_source)
         try:
             raw_config = configparser.RawConfigParser()
             raw_config.read(config_source)
@@ -436,14 +412,14 @@ class Generator(object):
         }
         if raw_config.has_option(section_name, 'theme'):
             config['theme'] = raw_config.get(section_name, 'theme')
-            self.log(u"Using    configured theme %s" % config['theme'])
+            self.log(u"Using configured theme: %s" % config['theme'])
         if raw_config.has_option(section_name, 'destination'):
             config['destination'] = raw_config.get(section_name, 'destination')
         if raw_config.has_option(section_name, 'linenos'):
             config['linenos'] = raw_config.get(section_name, 'linenos')
         if raw_config.has_option(section_name, 'max-toc-level'):
             config['max-toc-level'] = int(raw_config.get(section_name, 'max-toc-level'))
-        for boolopt in ('embed', 'relative', 'copy_theme'):
+        for boolopt in ('embed', 'relative'):
             if raw_config.has_option(section_name, boolopt):
                 config[boolopt] = raw_config.getboolean(section_name, boolopt)
         if raw_config.has_option(section_name, 'extensions'):
@@ -455,7 +431,8 @@ class Generator(object):
         return config
 
     def process_macros(self, content, source, context):
-        """ Processed all macros.
+        """
+        Process all macros.
         """
         classes = []
         for macro in self.macros:
@@ -465,7 +442,8 @@ class Generator(object):
         return content, classes
 
     def register_macro(self, *macros):
-        """ Registers macro classes passed a method arguments.
+        """
+        Registers macro classes passed a method arguments.
         """
         macro_options = {'relative': self.relative, 'linenos': self.linenos, 'destination_dir': self.destination_dir}
         for m in macros:
@@ -476,10 +454,10 @@ class Generator(object):
                                 " from macro.Macro")
 
     def embed_url_data(self, context, html):
-        """Find all image and fonts referenced in CSS with an ``url()`` function
+        """
+        Find all image and fonts referenced in CSS with an ``url()`` function
         and embed them in base64. Images from the user (i.e. included in its
-        source code, *not* in its CSS) are embedded by the macro
-        `EmbedImagesMacro`.
+        source code, *not* in its CSS) are embedded by the macro `EmbedImagesMacro`.
         """
         all_urls = re.findall(r'url\([\"\']?(.*?)[\"\']?\)', html,
                               re.DOTALL | re.UNICODE)
@@ -487,10 +465,7 @@ class Generator(object):
                       '.woff')
         embed_urls = (url for url in all_urls if url.endswith(embed_exts))
 
-        css_dirs = (
-            [os.path.join(self.theme_dir, 'css')] +
-            [css_entry['dirname'] for css_entry in context['user_css']]
-        )
+        css_dirs = [asset['dirname'] for asset in self.css_assets]
 
         for embed_url in embed_urls:
             embed_url = embed_url.replace('"', '').replace("'", '')
@@ -511,7 +486,8 @@ class Generator(object):
         return html
 
     def render(self):
-        """ Returns generated html code.
+        """
+        Returns generated html code.
         """
         with codecs.open(self.template_file, encoding=self.encoding) as template_src:
             template = jinja2.Template(template_src.read())
@@ -526,7 +502,8 @@ class Generator(object):
         return html
 
     def write(self):
-        """ Writes generated presentation code into the destination file.
+        """
+        Writes generated presentation code into the destination file.
         """
         html = self.render()
         dirname = os.path.dirname(self.destination_file)

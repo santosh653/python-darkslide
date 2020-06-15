@@ -41,3 +41,13 @@ def encode_data_from_url(url, source_path):
         return False
 
     return u"data:%s;base64,%s" % (mime_type, encoded_image.decode())
+
+
+class cached_property(object):
+    def __init__(self, func):
+        self.func = func
+
+    def __get__(self, obj, cls):
+        if obj is None: return self
+        value = obj.__dict__[self.func.__name__] = self.func(obj)
+        return value

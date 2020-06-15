@@ -21,7 +21,7 @@ except ImportError:
 class Macro(object):
     """Base class for altering slide HTML during presentation generation"""
 
-    def __init__(self, logger=sys.stdout, embed=False, options=None):
+    def __init__(self, logger=sys.stdout.write, embed=False, options=None):
         self.logger = logger
         self.embed = embed
         if options:
@@ -114,7 +114,7 @@ class EmbedImagesMacro(Macro):
                 content = content.replace(u"data=\"" + data_url,
                                           u"data=\"" + encoded_url, 1)
 
-            self.logger(u"Embedded image %s" % (image_url or data_url), 'notice')
+            self.logger(u"Embedded image %r" % (image_url or data_url), 'notice')
 
         return content, classes
 

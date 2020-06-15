@@ -217,8 +217,6 @@ Usage::
 Options:
   --version             show program's version number and exit
   -h, --help            show this help message and exit
-  -c, --copy-theme      Copy theme directory into current presentation source
-                        directory.
   -b, --debug           Will display any exception trace to stdout.
   -d FILE, --destination=FILE
                         The path to the to the destination html file. Default:
@@ -444,13 +442,6 @@ A Darkslide theme is a directory following this simple structure:
 If a theme does not provide HTML and JS files, those from the default
 theme will be used. CSS is not optional.
 
-Last, you can also copy the whole theme directory to your presentation
-one by passing the ``--copy-theme`` option to the ``darkslide`` command:
-
-::
-
-    $ darkslide slides.md -t /path/to/some/theme --copy-theme
-
 Widescreen 16x9
 ---------------
 
@@ -489,19 +480,10 @@ directory you're running the ``darkslide`` command from.
 Publishing your Presentation Online
 ===================================
 
-If you intend to publish your HTML presentation online, you'll have to
-use the ``--relative`` option, as well as the ``--copy-theme`` one to
-have all asset links relative to the root of your presentation;
+For online publishing use the ``--embed`` option to produce a standalone
+HTML file with no dependencies::
 
-::
-
-    $ darkslide slides.md --relative --copy-theme
-
-That way, you'll just have to host the whole presentation directory to a
-webserver. Of course, no Python nor PHP nor anything else than a HTTP
-webserver (like Apache) is required to host a Darkslide presentation.
-
-`Here's an example <http://www.akei.com/presentations/2011-Djangocong/index.html>`__.
+    $ darkslide slides.md --embed
 
 Theme Variables
 ===============

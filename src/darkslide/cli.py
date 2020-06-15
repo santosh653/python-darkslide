@@ -7,20 +7,13 @@ from . import __version__
 from . import generator
 
 
-def _parse_options():
+def parse_options():
     """Parses landslide's command line options"""
 
     parser = OptionParser(
         usage="%prog [options] input.md ...",
         description="Generates a HTML5 slideshow from Markdown or other formats.",
         version="%prog " + __version__)
-
-    parser.add_option(
-        "-c", "--copy-theme",
-        action="store_true",
-        dest="copy_theme",
-        help="Copy theme directory into current presentation source directory.",
-        default=False)
 
     parser.add_option(
         "-b", "--debug",
@@ -160,9 +153,9 @@ def run(input_file, options):
 def main():
     """Main program entry point"""
 
-    options, input_file = _parse_options()
+    options, input_file = parse_options()
 
-    if (options.debug):
+    if options.debug:
         run(input_file, options)
     else:
         try:
