@@ -577,55 +577,14 @@ body, header {
 section {
     font-family: 'Palatino', 'Palatino Linotype', 'URW Palladio L', 'Century Schoolbook L', 'Georgia', serif;
 }
-
-/* ======================================
-                 COLORS
-====================================== */
-/*
-$base03:    #002b36;
-$base02:    #073642;
-$base01:    #586e75;
-$base00:    #657b83;
-$base0:     #839496;
-$base1:     #93a1a1;
-$base2:     #eee8d5;
-$base3:     #fdf6e3;
-$yellow:    #b58900;
-$orange:    #cb4b16;
-$red:       #dc322f;
-$magenta:   #d33682;
-$violet:    #6c71c4;
-$blue:      #268bd2;
-$cyan:      #2aa198;
-$green:     #859900;
-@mixin rebase($rebase03,$rebase02,$rebase01,$rebase00,$rebase0,$rebase1,$rebase2,$rebase3)
-{
-    background-color:$rebase03;
-    color:$rebase0;
-    * { color:$rebase0; }
-    h1,h2,h3,h4,h5,h6 { color:$rebase1; border-color: $rebase0; }
-    a, a:active, a:visited { color: $rebase1; }
-}
-@mixin accentize($accent) {
-    a, a:active, a:visited, code.url { color: $accent; }
-    h1,h2,h3,h4,h5,h6 {color:$accent}
-}
-/ * light is default mode, so pair with general html definition * /
-html, .light { @include rebase($base3,$base2,$base1,$base0,$base00,$base01,$base02,$base03)}
-.dark  { @include rebase($base03,$base02,$base01,$base00,$base0,$base1,$base2,$base3)}
-html * {
-    color-profile: sRGB;
-    rendering-intent: auto;
-}
-*/
-.base03 { color: #002b36; }
+.base03 { color: #000000; }
 .base02 { color: #073642; }
 .base01 { color: #586e75; }
 .base00 { color: #657b83; }
 .base0 { color: #839496; }
 .base1 { color: #93a1a1; }
 .base2 { color: #eee8d5; }
-.base3 { color: #fdf6e3; }
+.base3 { color: #ffffff; }
 .yellow { color: #b58900; }
 .orange { color: #cb4b16; }
 .red { color: #dc322f; }
@@ -635,8 +594,8 @@ html * {
 .cyan { color: #2aa198; }
 .green { color: #859900; }
 body {
-    background: #073642;
-    color: #93a1a1;
+    background: #000000;
+    color: #ffffff;
 }
 footer {
     color: #93a1a1;
@@ -650,7 +609,7 @@ a, a:hover {
     background-size: 1px 1px;
     background-repeat: repeat-x;
     background-position: 0% 95%;
-    text-shadow: -0.06em -0.03ex #fdf6e3,-0.06em -0.06ex #fdf6e3,-0.06em -0.09ex #fdf6e3,0.12em 0ex #fdf6e3,-0.09em -0.09ex #fdf6e3,-0.09em -0.06ex #fdf6e3,-0.09em -0.03ex #fdf6e3,0.12em -0.21ex #fdf6e3,0.12em -0.27ex #fdf6e3,0.12em -0.24ex #fdf6e3,0em 0.08ex #fdf6e3,0em -0.18ex #fdf6e3,0em -0.15ex #fdf6e3,0em 0.02ex #fdf6e3,-0.06em 0ex #fdf6e3,-0.03em 0ex #fdf6e3,0em 0.06ex #fdf6e3,0em -0.12ex #fdf6e3,-0.12em -0.06ex #fdf6e3,-0.12em -0.03ex #fdf6e3,0.15em 0ex #fdf6e3,-0.12em -0.09ex #fdf6e3,0.03em -0.21ex #fdf6e3,-0.09em -0.18ex #fdf6e3,0.03em -0.24ex #fdf6e3,0.03em -0.27ex #fdf6e3,-0.09em -0.12ex #fdf6e3,-0.09em -0.15ex #fdf6e3,0.09em -0.27ex #fdf6e3,0.09em -0.24ex #fdf6e3,0.09em -0.21ex #fdf6e3,0em 0ex #fdf6e3,-0.15em 0.08ex #fdf6e3,0.06em 0ex #fdf6e3,0.12em -0.12ex #fdf6e3,-0.15em 0.02ex #fdf6e3,-0.15em 0.06ex #fdf6e3,-0.15em 0.04ex #fdf6e3,-0.15em -0.15ex #fdf6e3,-0.09em -0.21ex #fdf6e3,-0.09em -0.27ex #fdf6e3,-0.09em -0.24ex #fdf6e3,0.06em 0.08ex #fdf6e3,-0.06em -0.21ex #fdf6e3,0.06em 0.06ex #fdf6e3,0.06em 0.04ex #fdf6e3,-0.15em -0.18ex #fdf6e3,-0.06em -0.24ex #fdf6e3,-0.06em -0.27ex #fdf6e3,0.15em 0.08ex #fdf6e3,0.12em -0.09ex #fdf6e3,0.03em 0.02ex #fdf6e3,0.03em 0.04ex #fdf6e3,0.03em 0.06ex #fdf6e3,0.09em -0.18ex #fdf6e3,0.03em 0.08ex #fdf6e3,0.09em -0.15ex #fdf6e3,0.12em -0.03ex #fdf6e3,0.09em -0.12ex #fdf6e3,0.12em -0.06ex #fdf6e3,0.15em 0.02ex #fdf6e3,-0.15em -0.03ex #fdf6e3,-0.06em -0.15ex #fdf6e3,-0.15em -0.06ex #fdf6e3,-0.06em -0.12ex #fdf6e3,-0.15em -0.09ex #fdf6e3,-0.12em -0.21ex #fdf6e3,-0.06em -0.18ex #fdf6e3,-0.12em -0.27ex #fdf6e3,-0.12em -0.24ex #fdf6e3,-0.03em 0.04ex #fdf6e3,-0.03em 0.06ex #fdf6e3,0.09em -0.09ex #fdf6e3,-0.03em 0.02ex #fdf6e3,0.09em -0.06ex #fdf6e3,-0.03em 0.08ex #fdf6e3,0.09em -0.03ex #fdf6e3,0.09em 0ex #fdf6e3,0em -0.09ex #fdf6e3,0em -0.06ex #fdf6e3,-0.15em 0ex #fdf6e3,0em -0.03ex #fdf6e3,-0.12em 0.02ex #fdf6e3,0.12em 0.06ex #fdf6e3,-0.12em 0.06ex #fdf6e3,-0.12em 0.04ex #fdf6e3,-0.12em -0.12ex #fdf6e3,-0.12em 0.08ex #fdf6e3,0.15em -0.15ex #fdf6e3,0.15em -0.12ex #fdf6e3,-0.03em -0.24ex #fdf6e3,0em -0.24ex #fdf6e3,-0.03em -0.27ex #fdf6e3,0.15em -0.18ex #fdf6e3,-0.03em -0.21ex #fdf6e3,0.06em -0.24ex #fdf6e3,0.06em -0.27ex #fdf6e3,-0.09em 0ex #fdf6e3,0.06em -0.21ex #fdf6e3,-0.15em -0.12ex #fdf6e3,-0.06em 0.08ex #fdf6e3,-0.06em 0.02ex #fdf6e3,-0.06em 0.06ex #fdf6e3,-0.06em 0.04ex #fdf6e3,-0.12em -0.18ex #fdf6e3,-0.15em -0.21ex #fdf6e3,-0.15em -0.24ex #fdf6e3,-0.15em -0.27ex #fdf6e3,0.06em 0.02ex #fdf6e3,0.15em -0.21ex #fdf6e3,0.03em 0ex #fdf6e3,0.15em -0.27ex #fdf6e3,0.09em 0.02ex #fdf6e3,0.12em -0.18ex #fdf6e3,0.09em 0.06ex #fdf6e3,0.09em 0.04ex #fdf6e3,0em 0.04ex #fdf6e3,0.09em 0.08ex #fdf6e3,0.12em -0.15ex #fdf6e3,-0.03em -0.03ex #fdf6e3,-0.03em -0.06ex #fdf6e3,-0.12em -0.15ex #fdf6e3,0em -0.27ex #fdf6e3,0em -0.21ex #fdf6e3,-0.03em -0.09ex #fdf6e3,0.06em -0.09ex #fdf6e3,0.03em -0.18ex #fdf6e3,0.12em 0.08ex #fdf6e3,0.03em -0.15ex #fdf6e3,0.12em 0.04ex #fdf6e3,0.12em 0.02ex #fdf6e3,0.06em -0.06ex #fdf6e3,0.03em -0.12ex #fdf6e3,-0.03em -0.12ex #fdf6e3,-0.03em -0.15ex #fdf6e3,-0.03em -0.18ex #fdf6e3,0.15em 0.06ex #fdf6e3,0.15em 0.04ex #fdf6e3,0.15em -0.06ex #fdf6e3,0.15em -0.03ex #fdf6e3,0.15em -0.09ex #fdf6e3,0.06em -0.18ex #fdf6e3,0.03em -0.09ex #fdf6e3,0.03em -0.03ex #fdf6e3,0.06em -0.12ex #fdf6e3,0.03em -0.06ex #fdf6e3,0.06em -0.15ex #fdf6e3,0.06em -0.03ex #fdf6e3,-0.09em 0.08ex #fdf6e3,-0.09em 0.02ex #fdf6e3,-0.12em 0ex #fdf6e3,-0.09em 0.06ex #fdf6e3,-0.09em 0.04ex #fdf6e3,0.15em -0.24ex #fdf6e3;
+    text-shadow: -0.06em -0.03ex #ffffff,-0.06em -0.06ex #ffffff,-0.06em -0.09ex #ffffff,0.12em 0ex #ffffff,-0.09em -0.09ex #ffffff,-0.09em -0.06ex #ffffff,-0.09em -0.03ex #ffffff,0.12em -0.21ex #ffffff,0.12em -0.27ex #ffffff,0.12em -0.24ex #ffffff,0em 0.08ex #ffffff,0em -0.18ex #ffffff,0em -0.15ex #ffffff,0em 0.02ex #ffffff,-0.06em 0ex #ffffff,-0.03em 0ex #ffffff,0em 0.06ex #ffffff,0em -0.12ex #ffffff,-0.12em -0.06ex #ffffff,-0.12em -0.03ex #ffffff,0.15em 0ex #ffffff,-0.12em -0.09ex #ffffff,0.03em -0.21ex #ffffff,-0.09em -0.18ex #ffffff,0.03em -0.24ex #ffffff,0.03em -0.27ex #ffffff,-0.09em -0.12ex #ffffff,-0.09em -0.15ex #ffffff,0.09em -0.27ex #ffffff,0.09em -0.24ex #ffffff,0.09em -0.21ex #ffffff,0em 0ex #ffffff,-0.15em 0.08ex #ffffff,0.06em 0ex #ffffff,0.12em -0.12ex #ffffff,-0.15em 0.02ex #ffffff,-0.15em 0.06ex #ffffff,-0.15em 0.04ex #ffffff,-0.15em -0.15ex #ffffff,-0.09em -0.21ex #ffffff,-0.09em -0.27ex #ffffff,-0.09em -0.24ex #ffffff,0.06em 0.08ex #ffffff,-0.06em -0.21ex #ffffff,0.06em 0.06ex #ffffff,0.06em 0.04ex #ffffff,-0.15em -0.18ex #ffffff,-0.06em -0.24ex #ffffff,-0.06em -0.27ex #ffffff,0.15em 0.08ex #ffffff,0.12em -0.09ex #ffffff,0.03em 0.02ex #ffffff,0.03em 0.04ex #ffffff,0.03em 0.06ex #ffffff,0.09em -0.18ex #ffffff,0.03em 0.08ex #ffffff,0.09em -0.15ex #ffffff,0.12em -0.03ex #ffffff,0.09em -0.12ex #ffffff,0.12em -0.06ex #ffffff,0.15em 0.02ex #ffffff,-0.15em -0.03ex #ffffff,-0.06em -0.15ex #ffffff,-0.15em -0.06ex #ffffff,-0.06em -0.12ex #ffffff,-0.15em -0.09ex #ffffff,-0.12em -0.21ex #ffffff,-0.06em -0.18ex #ffffff,-0.12em -0.27ex #ffffff,-0.12em -0.24ex #ffffff,-0.03em 0.04ex #ffffff,-0.03em 0.06ex #ffffff,0.09em -0.09ex #ffffff,-0.03em 0.02ex #ffffff,0.09em -0.06ex #ffffff,-0.03em 0.08ex #ffffff,0.09em -0.03ex #ffffff,0.09em 0ex #ffffff,0em -0.09ex #ffffff,0em -0.06ex #ffffff,-0.15em 0ex #ffffff,0em -0.03ex #ffffff,-0.12em 0.02ex #ffffff,0.12em 0.06ex #ffffff,-0.12em 0.06ex #ffffff,-0.12em 0.04ex #ffffff,-0.12em -0.12ex #ffffff,-0.12em 0.08ex #ffffff,0.15em -0.15ex #ffffff,0.15em -0.12ex #ffffff,-0.03em -0.24ex #ffffff,0em -0.24ex #ffffff,-0.03em -0.27ex #ffffff,0.15em -0.18ex #ffffff,-0.03em -0.21ex #ffffff,0.06em -0.24ex #ffffff,0.06em -0.27ex #ffffff,-0.09em 0ex #ffffff,0.06em -0.21ex #ffffff,-0.15em -0.12ex #ffffff,-0.06em 0.08ex #ffffff,-0.06em 0.02ex #ffffff,-0.06em 0.06ex #ffffff,-0.06em 0.04ex #ffffff,-0.12em -0.18ex #ffffff,-0.15em -0.21ex #ffffff,-0.15em -0.24ex #ffffff,-0.15em -0.27ex #ffffff,0.06em 0.02ex #ffffff,0.15em -0.21ex #ffffff,0.03em 0ex #ffffff,0.15em -0.27ex #ffffff,0.09em 0.02ex #ffffff,0.12em -0.18ex #ffffff,0.09em 0.06ex #ffffff,0.09em 0.04ex #ffffff,0em 0.04ex #ffffff,0.09em 0.08ex #ffffff,0.12em -0.15ex #ffffff,-0.03em -0.03ex #ffffff,-0.03em -0.06ex #ffffff,-0.12em -0.15ex #ffffff,0em -0.27ex #ffffff,0em -0.21ex #ffffff,-0.03em -0.09ex #ffffff,0.06em -0.09ex #ffffff,0.03em -0.18ex #ffffff,0.12em 0.08ex #ffffff,0.03em -0.15ex #ffffff,0.12em 0.04ex #ffffff,0.12em 0.02ex #ffffff,0.06em -0.06ex #ffffff,0.03em -0.12ex #ffffff,-0.03em -0.12ex #ffffff,-0.03em -0.15ex #ffffff,-0.03em -0.18ex #ffffff,0.15em 0.06ex #ffffff,0.15em 0.04ex #ffffff,0.15em -0.06ex #ffffff,0.15em -0.03ex #ffffff,0.15em -0.09ex #ffffff,0.06em -0.18ex #ffffff,0.03em -0.09ex #ffffff,0.03em -0.03ex #ffffff,0.06em -0.12ex #ffffff,0.03em -0.06ex #ffffff,0.06em -0.15ex #ffffff,0.06em -0.03ex #ffffff,-0.09em 0.08ex #ffffff,-0.09em 0.02ex #ffffff,-0.12em 0ex #ffffff,-0.09em 0.06ex #ffffff,-0.09em 0.04ex #ffffff,0.15em -0.24ex #ffffff;
 }
 a:hover {
     color: #2aa198;
@@ -658,14 +617,14 @@ a:hover {
 }
 .presenter_notes a, .presenter_notes a:hover,
 div#current_presenter_notes a, div#current_presenter_notes a:hover {
-    text-shadow: -0.06em -0.03ex #002b36,-0.06em -0.06ex #002b36,-0.06em -0.09ex #002b36,0.12em 0ex #002b36,-0.09em -0.09ex #002b36,-0.09em -0.06ex #002b36,-0.09em -0.03ex #002b36,0.12em -0.21ex #002b36,0.12em -0.27ex #002b36,0.12em -0.24ex #002b36,0em 0.08ex #002b36,0em -0.18ex #002b36,0em -0.15ex #002b36,0em 0.02ex #002b36,-0.06em 0ex #002b36,-0.03em 0ex #002b36,0em 0.06ex #002b36,0em -0.12ex #002b36,-0.12em -0.06ex #002b36,-0.12em -0.03ex #002b36,0.15em 0ex #002b36,-0.12em -0.09ex #002b36,0.03em -0.21ex #002b36,-0.09em -0.18ex #002b36,0.03em -0.24ex #002b36,0.03em -0.27ex #002b36,-0.09em -0.12ex #002b36,-0.09em -0.15ex #002b36,0.09em -0.27ex #002b36,0.09em -0.24ex #002b36,0.09em -0.21ex #002b36,0em 0ex #002b36,-0.15em 0.08ex #002b36,0.06em 0ex #002b36,0.12em -0.12ex #002b36,-0.15em 0.02ex #002b36,-0.15em 0.06ex #002b36,-0.15em 0.04ex #002b36,-0.15em -0.15ex #002b36,-0.09em -0.21ex #002b36,-0.09em -0.27ex #002b36,-0.09em -0.24ex #002b36,0.06em 0.08ex #002b36,-0.06em -0.21ex #002b36,0.06em 0.06ex #002b36,0.06em 0.04ex #002b36,-0.15em -0.18ex #002b36,-0.06em -0.24ex #002b36,-0.06em -0.27ex #002b36,0.15em 0.08ex #002b36,0.12em -0.09ex #002b36,0.03em 0.02ex #002b36,0.03em 0.04ex #002b36,0.03em 0.06ex #002b36,0.09em -0.18ex #002b36,0.03em 0.08ex #002b36,0.09em -0.15ex #002b36,0.12em -0.03ex #002b36,0.09em -0.12ex #002b36,0.12em -0.06ex #002b36,0.15em 0.02ex #002b36,-0.15em -0.03ex #002b36,-0.06em -0.15ex #002b36,-0.15em -0.06ex #002b36,-0.06em -0.12ex #002b36,-0.15em -0.09ex #002b36,-0.12em -0.21ex #002b36,-0.06em -0.18ex #002b36,-0.12em -0.27ex #002b36,-0.12em -0.24ex #002b36,-0.03em 0.04ex #002b36,-0.03em 0.06ex #002b36,0.09em -0.09ex #002b36,-0.03em 0.02ex #002b36,0.09em -0.06ex #002b36,-0.03em 0.08ex #002b36,0.09em -0.03ex #002b36,0.09em 0ex #002b36,0em -0.09ex #002b36,0em -0.06ex #002b36,-0.15em 0ex #002b36,0em -0.03ex #002b36,-0.12em 0.02ex #002b36,0.12em 0.06ex #002b36,-0.12em 0.06ex #002b36,-0.12em 0.04ex #002b36,-0.12em -0.12ex #002b36,-0.12em 0.08ex #002b36,0.15em -0.15ex #002b36,0.15em -0.12ex #002b36,-0.03em -0.24ex #002b36,0em -0.24ex #002b36,-0.03em -0.27ex #002b36,0.15em -0.18ex #002b36,-0.03em -0.21ex #002b36,0.06em -0.24ex #002b36,0.06em -0.27ex #002b36,-0.09em 0ex #002b36,0.06em -0.21ex #002b36,-0.15em -0.12ex #002b36,-0.06em 0.08ex #002b36,-0.06em 0.02ex #002b36,-0.06em 0.06ex #002b36,-0.06em 0.04ex #002b36,-0.12em -0.18ex #002b36,-0.15em -0.21ex #002b36,-0.15em -0.24ex #002b36,-0.15em -0.27ex #002b36,0.06em 0.02ex #002b36,0.15em -0.21ex #002b36,0.03em 0ex #002b36,0.15em -0.27ex #002b36,0.09em 0.02ex #002b36,0.12em -0.18ex #002b36,0.09em 0.06ex #002b36,0.09em 0.04ex #002b36,0em 0.04ex #002b36,0.09em 0.08ex #002b36,0.12em -0.15ex #002b36,-0.03em -0.03ex #002b36,-0.03em -0.06ex #002b36,-0.12em -0.15ex #002b36,0em -0.27ex #002b36,0em -0.21ex #002b36,-0.03em -0.09ex #002b36,0.06em -0.09ex #002b36,0.03em -0.18ex #002b36,0.12em 0.08ex #002b36,0.03em -0.15ex #002b36,0.12em 0.04ex #002b36,0.12em 0.02ex #002b36,0.06em -0.06ex #002b36,0.03em -0.12ex #002b36,-0.03em -0.12ex #002b36,-0.03em -0.15ex #002b36,-0.03em -0.18ex #002b36,0.15em 0.06ex #002b36,0.15em 0.04ex #002b36,0.15em -0.06ex #002b36,0.15em -0.03ex #002b36,0.15em -0.09ex #002b36,0.06em -0.18ex #002b36,0.03em -0.09ex #002b36,0.03em -0.03ex #002b36,0.06em -0.12ex #002b36,0.03em -0.06ex #002b36,0.06em -0.15ex #002b36,0.06em -0.03ex #002b36,-0.09em 0.08ex #002b36,-0.09em 0.02ex #002b36,-0.12em 0ex #002b36,-0.09em 0.06ex #002b36,-0.09em 0.04ex #002b36,0.15em -0.24ex #002b36;
+    text-shadow: -0.06em -0.03ex #000000,-0.06em -0.06ex #000000,-0.06em -0.09ex #000000,0.12em 0ex #000000,-0.09em -0.09ex #000000,-0.09em -0.06ex #000000,-0.09em -0.03ex #000000,0.12em -0.21ex #000000,0.12em -0.27ex #000000,0.12em -0.24ex #000000,0em 0.08ex #000000,0em -0.18ex #000000,0em -0.15ex #000000,0em 0.02ex #000000,-0.06em 0ex #000000,-0.03em 0ex #000000,0em 0.06ex #000000,0em -0.12ex #000000,-0.12em -0.06ex #000000,-0.12em -0.03ex #000000,0.15em 0ex #000000,-0.12em -0.09ex #000000,0.03em -0.21ex #000000,-0.09em -0.18ex #000000,0.03em -0.24ex #000000,0.03em -0.27ex #000000,-0.09em -0.12ex #000000,-0.09em -0.15ex #000000,0.09em -0.27ex #000000,0.09em -0.24ex #000000,0.09em -0.21ex #000000,0em 0ex #000000,-0.15em 0.08ex #000000,0.06em 0ex #000000,0.12em -0.12ex #000000,-0.15em 0.02ex #000000,-0.15em 0.06ex #000000,-0.15em 0.04ex #000000,-0.15em -0.15ex #000000,-0.09em -0.21ex #000000,-0.09em -0.27ex #000000,-0.09em -0.24ex #000000,0.06em 0.08ex #000000,-0.06em -0.21ex #000000,0.06em 0.06ex #000000,0.06em 0.04ex #000000,-0.15em -0.18ex #000000,-0.06em -0.24ex #000000,-0.06em -0.27ex #000000,0.15em 0.08ex #000000,0.12em -0.09ex #000000,0.03em 0.02ex #000000,0.03em 0.04ex #000000,0.03em 0.06ex #000000,0.09em -0.18ex #000000,0.03em 0.08ex #000000,0.09em -0.15ex #000000,0.12em -0.03ex #000000,0.09em -0.12ex #000000,0.12em -0.06ex #000000,0.15em 0.02ex #000000,-0.15em -0.03ex #000000,-0.06em -0.15ex #000000,-0.15em -0.06ex #000000,-0.06em -0.12ex #000000,-0.15em -0.09ex #000000,-0.12em -0.21ex #000000,-0.06em -0.18ex #000000,-0.12em -0.27ex #000000,-0.12em -0.24ex #000000,-0.03em 0.04ex #000000,-0.03em 0.06ex #000000,0.09em -0.09ex #000000,-0.03em 0.02ex #000000,0.09em -0.06ex #000000,-0.03em 0.08ex #000000,0.09em -0.03ex #000000,0.09em 0ex #000000,0em -0.09ex #000000,0em -0.06ex #000000,-0.15em 0ex #000000,0em -0.03ex #000000,-0.12em 0.02ex #000000,0.12em 0.06ex #000000,-0.12em 0.06ex #000000,-0.12em 0.04ex #000000,-0.12em -0.12ex #000000,-0.12em 0.08ex #000000,0.15em -0.15ex #000000,0.15em -0.12ex #000000,-0.03em -0.24ex #000000,0em -0.24ex #000000,-0.03em -0.27ex #000000,0.15em -0.18ex #000000,-0.03em -0.21ex #000000,0.06em -0.24ex #000000,0.06em -0.27ex #000000,-0.09em 0ex #000000,0.06em -0.21ex #000000,-0.15em -0.12ex #000000,-0.06em 0.08ex #000000,-0.06em 0.02ex #000000,-0.06em 0.06ex #000000,-0.06em 0.04ex #000000,-0.12em -0.18ex #000000,-0.15em -0.21ex #000000,-0.15em -0.24ex #000000,-0.15em -0.27ex #000000,0.06em 0.02ex #000000,0.15em -0.21ex #000000,0.03em 0ex #000000,0.15em -0.27ex #000000,0.09em 0.02ex #000000,0.12em -0.18ex #000000,0.09em 0.06ex #000000,0.09em 0.04ex #000000,0em 0.04ex #000000,0.09em 0.08ex #000000,0.12em -0.15ex #000000,-0.03em -0.03ex #000000,-0.03em -0.06ex #000000,-0.12em -0.15ex #000000,0em -0.27ex #000000,0em -0.21ex #000000,-0.03em -0.09ex #000000,0.06em -0.09ex #000000,0.03em -0.18ex #000000,0.12em 0.08ex #000000,0.03em -0.15ex #000000,0.12em 0.04ex #000000,0.12em 0.02ex #000000,0.06em -0.06ex #000000,0.03em -0.12ex #000000,-0.03em -0.12ex #000000,-0.03em -0.15ex #000000,-0.03em -0.18ex #000000,0.15em 0.06ex #000000,0.15em 0.04ex #000000,0.15em -0.06ex #000000,0.15em -0.03ex #000000,0.15em -0.09ex #000000,0.06em -0.18ex #000000,0.03em -0.09ex #000000,0.03em -0.03ex #000000,0.06em -0.12ex #000000,0.03em -0.06ex #000000,0.06em -0.15ex #000000,0.06em -0.03ex #000000,-0.09em 0.08ex #000000,-0.09em 0.02ex #000000,-0.12em 0ex #000000,-0.09em 0.06ex #000000,-0.09em 0.04ex #000000,0.15em -0.24ex #000000;
 }
 code, tt.docutils.literal {
     color: #6c71c4;
 }
 .slide {
-    background-color: #fdf6e3;
-    color: #586e75;
+    background-color: #ffffff;
+    color: #000000;
 }
 .expose .slide:hover {
     box-shadow: 0 0 0 15px #268bd2;
@@ -677,18 +636,19 @@ code, tt.docutils.literal {
     box-shadow: 0 0 0 15px #268bd2, 0 0 0 30px #b58900;
 }
 .presenter_notes {
-    background: #002b36;
+    background: #000000;
+    color: #ffffff;
 }
 @media screen, projection {
     ::-webkit-scrollbar-thumb {
-        background: #fdf6e3;
+        background: #ffffff;
         border-color: #eee8d5;
     }
     ::-webkit-scrollbar {
         background: #eee8d5;
     }
     ::-webkit-scrollbar-corner {
-        background: #fdf6e3;
+        background: #ffffff;
     }
 }
 .qr svg {
@@ -701,79 +661,170 @@ code, tt.docutils.literal {
 }
 /* See: https://gist.github.com/nicolashery/5765395 */
 /* Synic syntax highlighting */
-/*pre pre:not(.diff-line-pre),pre table{background:#000!important;color:#fdf6e3ff0!important;}*/
+/*pre pre:not(.diff-line-pre),pre table{background:#000!important;color:#ffffffff0!important;}*/
 
-pre { background: #fdf6e3; color: #586e75; }
-.linenos pre { background: #eee8d5;}
-.c { color: #93a1a1; }
-.err { color: #586e75; }
-.g { color: #586e75; }
-.k { color: #859900; }
-.l { color: #586e75; }
-.n { color: #586e75; }
-.o { color: #859900; }
-.x { color: #cb4b16; }
-.p { color: #586e75; }
-.cm { color: #93a1a1; }
-.cp { color: #859900; }
-.c1 { color: #93a1a1; }
-.cs { color: #859900; }
-.gd { color: #2aa198; }
-.ge { color: #586e75; font-style: italic; }
-.gr { color: #dc322f; }
-.gh { color: #cb4b16; }
-.gi { color: #859900; }
-.go { color: #586e75; }
-.gp { color: #586e75; }
-.gs { color: #586e75; font-weight: bold; }
-.gu { color: #cb4b16; }
-.gt { color: #586e75; }
-.kc { color: #cb4b16; }
-.kd { color: #268bd2; }
-.kn { color: #859900; }
-.kp { color: #859900; }
-.kr { color: #268bd2; }
-.kt { color: #dc322f; }
-.ld { color: #586e75; }
-.m { color: #2aa198; }
-.s { color: #2aa198; }
-.na { color: #586e75; }
-.nb { color: #b58900; }
-.nc { color: #268bd2; }
-.no { color: #cb4b16; }
-.nd { color: #268bd2; }
-.ni { color: #cb4b16; }
-.ne { color: #cb4b16; }
-.nf { color: #268bd2; }
-.nl { color: #586e75; }
-.nn { color: #586e75; }
-.nx { color: #586e75; }
-.py { color: #586e75; }
-.nt { color: #268bd2; }
-.nv { color: #268bd2; }
-.ow { color: #859900; }
-.w { color: #586e75; }
-.mf { color: #2aa198; }
-.mh { color: #2aa198; }
-.mi { color: #2aa198; }
-.mo { color: #2aa198; }
-.sb { color: #93a1a1; }
-.sc { color: #2aa198; }
-.sd { color: #586e75; }
-.s2 { color: #2aa198; }
-.se { color: #cb4b16; }
-.sh { color: #586e75; }
-.si { color: #2aa198; }
-.sx { color: #2aa198; }
-.sr { color: #dc322f; }
-.s1 { color: #2aa198; }
-.ss { color: #2aa198; }
-.bp { color: #268bd2; }
-.vc { color: #268bd2; }
-.vg { color: #268bd2; }
-.vi { color: #268bd2; }
-.il { color: #2aa198; }
+pre .lineno { color: #aaa;}
+pre  { background: #ffffff; }
+pre .c { color: #60a0b0; font-style: italic } /* Comment */
+pre .err { border: 1px solid #FF0000 } /* Error */
+pre .k { color: #007020; font-weight: bold } /* Keyword */
+pre .o { color: #666666 } /* Operator */
+pre .ch { color: #60a0b0; font-style: italic } /* Comment.Hashbang */
+pre .cm { color: #60a0b0; font-style: italic } /* Comment.Multiline */
+pre .cp { color: #007020 } /* Comment.Preproc */
+pre .cpf { color: #60a0b0; font-style: italic } /* Comment.PreprocFile */
+pre .c1 { color: #60a0b0; font-style: italic } /* Comment.Single */
+pre .cs { color: #60a0b0; background-color: #fff0f0 } /* Comment.Special */
+pre .gd { color: #A00000 } /* Generic.Deleted */
+pre .ge { font-style: italic } /* Generic.Emph */
+pre .gr { color: #FF0000 } /* Generic.Error */
+pre .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+pre .gi { color: #00A000 } /* Generic.Inserted */
+pre .go { color: #888888 } /* Generic.Output */
+pre .gp { color: #c65d09; font-weight: bold } /* Generic.Prompt */
+pre .gs { font-weight: bold } /* Generic.Strong */
+pre .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+pre .gt { color: #0044DD } /* Generic.Traceback */
+pre .kc { color: #007020; font-weight: bold } /* Keyword.Constant */
+pre .kd { color: #007020; font-weight: bold } /* Keyword.Declaration */
+pre .kn { color: #007020; font-weight: bold } /* Keyword.Namespace */
+pre .kp { color: #007020 } /* Keyword.Pseudo */
+pre .kr { color: #007020; font-weight: bold } /* Keyword.Reserved */
+pre .kt { color: #902000 } /* Keyword.Type */
+pre .m { color: #40a070 } /* Literal.Number */
+pre .s { color: #4070a0 } /* Literal.String */
+pre .na { color: #4070a0 } /* Name.Attribute */
+pre .nb { color: #007020 } /* Name.Builtin */
+pre .nc { color: #0e84b5; font-weight: bold } /* Name.Class */
+pre .no { color: #60add5 } /* Name.Constant */
+pre .nd { color: #555555; font-weight: bold } /* Name.Decorator */
+pre .ni { color: #d55537; font-weight: bold } /* Name.Entity */
+pre .ne { color: #007020 } /* Name.Exception */
+pre .nf { color: #06287e } /* Name.Function */
+pre .nl { color: #002070; font-weight: bold } /* Name.Label */
+pre .nn { color: #0e84b5; font-weight: bold } /* Name.Namespace */
+pre .nt { color: #062873; font-weight: bold } /* Name.Tag */
+pre .nv { color: #bb60d5 } /* Name.Variable */
+pre .ow { color: #007020; font-weight: bold } /* Operator.Word */
+pre .w { color: #bbbbbb } /* Text.#ffffffspace */
+pre .mb { color: #40a070 } /* Literal.Number.Bin */
+pre .mf { color: #40a070 } /* Literal.Number.Float */
+pre .mh { color: #40a070 } /* Literal.Number.Hex */
+pre .mi { color: #40a070 } /* Literal.Number.Integer */
+pre .mo { color: #40a070 } /* Literal.Number.Oct */
+pre .sa { color: #4070a0 } /* Literal.String.Affix */
+pre .sb { color: #4070a0 } /* Literal.String.Backtick */
+pre .sc { color: #4070a0 } /* Literal.String.Char */
+pre .dl { color: #4070a0 } /* Literal.String.Delimiter */
+pre .sd { color: #4070a0; font-style: italic } /* Literal.String.Doc */
+pre .s2 { color: #4070a0 } /* Literal.String.Double */
+pre .se { color: #4070a0; font-weight: bold } /* Literal.String.Escape */
+pre .sh { color: #4070a0 } /* Literal.String.Heredoc */
+pre .si { color: #70a0d0; font-style: italic } /* Literal.String.Interpol */
+pre .sx { color: #c65d09 } /* Literal.String.Other */
+pre .sr { color: #235388 } /* Literal.String.Regex */
+pre .s1 { color: #4070a0 } /* Literal.String.Single */
+pre .ss { color: #517918 } /* Literal.String.Symbol */
+pre .bp { color: #007020 } /* Name.Builtin.Pseudo */
+pre .fm { color: #06287e } /* Name.Function.Magic */
+pre .vc { color: #bb60d5 } /* Name.Variable.Class */
+pre .vg { color: #bb60d5 } /* Name.Variable.Global */
+pre .vi { color: #bb60d5 } /* Name.Variable.Instance */
+pre .vm { color: #bb60d5 } /* Name.Variable.Magic */
+pre .il { color: #40a070 } /* Literal.Number.Integer.Long */.syntax pre .hll { background-color: #ffffcc }
 
+
+      </style>
+      
+    
+      
+      <style type="text/css">
+        .slide {
+    width: 1333px;
+.slide header:only-child h1 {
+    width: 1333px;
+}
+@media screen {
+    .slide {
+        margin-left: -667px;
+    }
+    .slide.next {
+        margin-left: 677px;
+    }
+    .slide.next_2 {
+        margin-left: 1368px;
+    }
+    .slide.next_1 {
+        margin-left: 2020px;
+    }
+    .show_next .slide.prev {
+        margin-left: -2681px;
+    }
+    .show_next .slide.current {
+        margin-left: -1338px;
+    }
+    .show_next .slide.next {
+        margin-left: 5px;
+    }
+    .show_next .slide.next_1 {
+        margin-left: 1348px;
+    }
+    .presenter_view .slide.prev {
+        margin-left: -1348px;
+    }
+    .presenter_view .slide.current {
+        margin-left: -667px;
+    }
+    .presenter_view .slide.next_1 {
+        margin-left: 692px;
+    }
+}
+
+      </style>
+      
+    
+      
+      <style type="text/css">
+        .slide {
+    width: 1333px;
+.slide header:only-child h1 {
+    width: 1333px;
+}
+@media screen {
+    .slide {
+        margin-left: -667px;
+    }
+    .slide.next {
+        margin-left: 677px;
+    }
+    .slide.next_2 {
+        margin-left: 1368px;
+    }
+    .slide.next_1 {
+        margin-left: 2020px;
+    }
+    .show_next .slide.prev {
+        margin-left: -2681px;
+    }
+    .show_next .slide.current {
+        margin-left: -1338px;
+    }
+    .show_next .slide.next {
+        margin-left: 5px;
+    }
+    .show_next .slide.next_1 {
+        margin-left: 1348px;
+    }
+    .presenter_view .slide.prev {
+        margin-left: -1348px;
+    }
+    .presenter_view .slide.current {
+        margin-left: -667px;
+    }
+    .presenter_view .slide.next_1 {
+        margin-left: 692px;
+    }
+}
 
       </style>
       
