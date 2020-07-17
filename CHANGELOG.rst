@@ -2,6 +2,14 @@
 Changelog
 =========
 
+Darkslide v6.0.0 (2020-07-17)
+=============================
+
+* Dropped the ``--copy-theme`` option (**backwards incompatible**).
+* Added support for theme mods (the ``--mod`` option) and reworked the asset management internals.
+* Added a wide 16:9 theme mod.
+  Contributed by Eric Moyer in `#19 <https://github.com/ionelmc/python-darkslide/pull/19>`_.
+
 Darkslide v5.1.0 (2020-01-13)
 =============================
 

@@ -1,5 +1,6 @@
 .slide {
     width: 1333px;
+}
 .slide header:only-child h1 {
     width: 1333px;
 }
@@ -36,5 +37,8 @@
     }
     .presenter_view .slide.next_1 {
         margin-left: 692px;
+    }
+    .expose .slide-wrapper {
+        width: 414px;
     }
 }

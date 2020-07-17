@@ -103,6 +103,8 @@ class Generator(object):
             self.source = source
             self.work_dir = '.'
             self.destination_dir = os.path.dirname(self.destination_file)
+            self.user_css = []
+            self.user_js = []
 
             source_abspath = os.path.abspath(source)
 
@@ -274,7 +276,6 @@ class Generator(object):
             self.read_asset(self.lookup_file(os.path.join('css', 'theme.css'))),
         ]
         if self.theme_mod:
-            css.append(self.read_asset(self.lookup_file(os.path.join('css', 'mod.css'))))
             css.append(self.read_asset(self.lookup_file(os.path.join('css', 'mod.css'))))
         css.extend(self.process_user_files(self.user_css))
         return css
