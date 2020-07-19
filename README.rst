@@ -10,7 +10,6 @@ Overview
     * - tests
       - | |travis| |appveyor| |requires|
         | |coveralls| |codecov|
-        | |landscape| |scrutinizer| |codacy| |codeclimate|
     * - package
       - | |version| |wheel| |supported-versions| |supported-implementations|
         | |commits-since|
@@ -31,21 +30,9 @@ Overview
     :alt: Coverage Status
     :target: https://coveralls.io/r/ionelmc/python-darkslide
 
-.. |codecov| image:: https://codecov.io/github/ionelmc/python-darkslide/coverage.svg?branch=master
+.. |codecov| image:: https://codecov.io/gh/ionelmc/python-darkslide/branch/master/graphs/badge.svg?branch=master
     :alt: Coverage Status
     :target: https://codecov.io/github/ionelmc/python-darkslide
-
-.. |landscape| image:: https://landscape.io/github/ionelmc/python-darkslide/master/landscape.svg?style=flat
-    :target: https://landscape.io/github/ionelmc/python-darkslide/master
-    :alt: Code Quality Status
-
-.. |codacy| image:: https://img.shields.io/codacy/grade/862e7946eabb4112be6503a667381b71.svg
-    :target: https://www.codacy.com/app/ionelmc/python-darkslide
-    :alt: Codacy Code Quality Status
-
-.. |codeclimate| image:: https://codeclimate.com/github/ionelmc/python-darkslide/badges/gpa.svg
-   :target: https://codeclimate.com/github/ionelmc/python-darkslide
-   :alt: CodeClimate Quality Status
 
 .. |version| image:: https://img.shields.io/pypi/v/darkslide.svg
     :alt: PyPI Package latest release
@@ -67,10 +54,6 @@ Overview
     :alt: Commits since latest release
     :target: https://github.com/ionelmc/python-darkslide/compare/v5.1.0...master
 
-
-.. |scrutinizer| image:: https://img.shields.io/scrutinizer/quality/g/ionelmc/python-darkslide/master.svg
-    :alt: Scrutinizer Status
-    :target: https://scrutinizer-ci.com/g/ionelmc/python-darkslide/
 
 
 .. end-badges
