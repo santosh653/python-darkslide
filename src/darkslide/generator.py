@@ -116,12 +116,24 @@ class Generator(object):
         if os.path.exists(self.destination_file) and not os.path.isfile(self.destination_file):
             raise IOError("Destination %s exists and is not a file" % self.destination_file)
 
+        if os.path.exists(self.theme):
+            theme_dir = self.theme
+        else:
+            theme_dir = os.path.join(THEMES_DIR, self.theme)
+
+        if not os.path.exists(theme_dir):
+            raise IOError("Theme %r doesn't exist" % self.theme)
+
         self.theme_paths = [
-            os.path.join(THEMES_DIR, self.theme),
+            theme_dir,
             os.path.join(THEMES_DIR, 'default'),
         ]
         if self.theme_mod:
-            self.theme_paths.append(os.path.join(MODS_DIR, self.theme_mod))
+            theme_mod_dir = os.path.join(MODS_DIR, self.theme_mod)
+            if not os.path.exists(theme_mod_dir):
+                raise IOError("Theme mod %r doesn't exist" % self.theme_mod)
+
+            self.theme_paths.append(theme_mod_dir)
 
         self.template_file = self.lookup_file('template.html')
 
