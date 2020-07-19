@@ -187,5 +187,3 @@ Other features
 ==============
 
 View other features in the help sidebar by pressing ``h``
-
-
