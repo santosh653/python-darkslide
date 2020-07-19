@@ -2,8 +2,9 @@ import sys
 import time
 
 try:
+    from watchdog.events import DirModifiedEvent
+    from watchdog.events import FileSystemEventHandler
     from watchdog.observers import Observer
-    from watchdog.events import FileSystemEventHandler, DirModifiedEvent
 except ImportError:
     print('Error: The watchdog module must be installed to use the -w option')
     print('Exiting...')
