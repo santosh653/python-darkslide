@@ -80,14 +80,14 @@ class Generator(object):
             self.verbose = False
 
         if not source or not os.path.exists(source):
-            raise IOError("Source file/directory %s does not exist" % source)
+            raise RuntimeError("Source file/directory %s does not exist" % source)
 
         if source.endswith('.cfg'):
             self.work_dir = os.path.dirname(source)
             config = self.parse_config(source)
             self.source = config.get('source')
             if not self.source:
-                raise IOError('unable to fetch a valid source from config')
+                raise RuntimeError('unable to fetch a valid source from config')
             source_abspath = os.path.abspath(self.source[0])
             self.destination_file = config.get('destination', self.destination_file)
             self.embed = config.get('embed', self.embed)
@@ -114,7 +114,7 @@ class Generator(object):
         self.watch_dir = source_abspath
 
         if os.path.exists(self.destination_file) and not os.path.isfile(self.destination_file):
-            raise IOError("Destination %s exists and is not a file" % self.destination_file)
+            raise RuntimeError("Destination %s exists and is not a file" % self.destination_file)
 
         if os.path.exists(self.theme):
             theme_dir = self.theme
@@ -122,7 +122,7 @@ class Generator(object):
             theme_dir = os.path.join(THEMES_DIR, self.theme)
 
         if not os.path.exists(theme_dir):
-            raise IOError("Theme %r doesn't exist" % self.theme)
+            raise RuntimeError("Theme %r doesn't exist" % self.theme)
 
         self.theme_paths = [
             theme_dir,
@@ -131,23 +131,28 @@ class Generator(object):
         if self.theme_mod:
             theme_mod_dir = os.path.join(MODS_DIR, self.theme_mod)
             if not os.path.exists(theme_mod_dir):
-                raise IOError("Theme mod %r doesn't exist" % self.theme_mod)
+                raise RuntimeError("Theme mod %r doesn't exist" % self.theme_mod)
 
             self.theme_paths.append(theme_mod_dir)
 
+        legacy_template = self.lookup_file('base.html', raise_error=False)
+        if legacy_template:
+            raise RuntimeError("A pre-v6.0 template file has been found at %r. You need to rename it to template.html and use the new"
+                               " css_assets/js_assets variables instead." % legacy_template)
         self.template_file = self.lookup_file('template.html')
 
         # macros registering
         self.macros = []
         self.register_macro(*self.default_macros)
 
-    def lookup_file(self, name):
+    def lookup_file(self, name, raise_error=True):
         for path in self.theme_paths:
             absname = os.path.join(path, name)
             if os.path.exists(absname):
                 return absname
         else:
-            raise RuntimeError("Could not find %s in %s" % (name, self.theme_paths))
+            if raise_error:
+                raise RuntimeError("Could not find %s in %s" % (name, self.theme_paths))
 
     def process_user_files(self, files):
         if isinstance(files, string_types):
@@ -164,7 +169,7 @@ class Generator(object):
             else:
                 path = os.path.normpath(os.path.join(self.work_dir, path))
                 if not os.path.exists(path):
-                    raise IOError('%s user file not found' % (path,))
+                    raise RuntimeError('%s user file not found' % (path,))
                 with codecs.open(path, encoding=self.encoding) as fh:
                     yield {
                         'path_url': utils.get_path_url(path, self.relative and self.destination_dir),
