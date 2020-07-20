@@ -24,8 +24,8 @@ def logtest(message, type='notice'):
 
 
 def test_generator__init__():
-    raises(IOError, Generator, None)
-    raises(IOError, Generator, 'foo.md')
+    raises(RuntimeError, Generator, None)
+    raises(RuntimeError, Generator, 'foo.md')
 
 
 def test_add_user_assets():
@@ -33,8 +33,8 @@ def test_add_user_assets():
     g = Generator(base_dir, logger=logtest)
     g.user_css.extend(g.process_user_files(os.path.join(DATA_DIR, 'test.css')))
     g.user_js.extend(g.process_user_files(os.path.join(DATA_DIR, 'test.js')))
-    assert g.user_css[0]['contents'] == '* {color: red;}'
-    assert g.user_js[0]['contents'] == "alert('foo');"
+    assert g.user_css[0]['contents'] == '* {color: red;}\n'
+    assert g.user_js[0]['contents'] == "alert('foo');\n"
 
 
 def test_get_toc():
