@@ -50,9 +50,9 @@ Overview
     :alt: Supported implementations
     :target: https://pypi.org/project/darkslide
 
-.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-darkslide/v5.1.0.svg
+.. |commits-since| image:: https://img.shields.io/github/commits-since/ionelmc/python-darkslide/v6.0.0.svg
     :alt: Commits since latest release
-    :target: https://github.com/ionelmc/python-darkslide/compare/v5.1.0...master
+    :target: https://github.com/ionelmc/python-darkslide/compare/v6.0.0...master
 
 
 
