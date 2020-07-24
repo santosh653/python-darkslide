@@ -2,7 +2,7 @@
 Changelog
 =========
 
-Darkslide v6.0.0 (2020-07-17)
+Darkslide v6.0.0 (2020-07-24)
 =============================
 
 * Dropped the ``--copy-theme`` option (**backwards incompatible**).
